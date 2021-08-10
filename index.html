@@ -4,10 +4,16 @@
     <head></head>
     <body>
         <h1>Todos</h1>
-        <input id="new-todo-text" type="text" placeholder="Enter something to do">
-        <button id="add-todo">Add Todo</button>
+        <label >
+            <input type="checkbox" name="" id="show-completed"> hide completed
+        </label>
         <input type="text" class="search" placeholder="Search Item">
         <div class="todo"></div>
+
+        <form id="todo-form">
+            <input name = "input1"type="text" placeholder="Enter something to do">
+            <button type="submit">Add Todo</button>
+        </form>
         <script src="todo-app.js"></script>
     </body>
 </html>

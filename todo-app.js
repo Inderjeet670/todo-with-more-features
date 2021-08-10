@@ -16,13 +16,22 @@ const todos = [{
 }]
 
 const filter = {
-    search: ''
+    search: '',
+    hideCompleted: false
 
 }
 
 const renders = function(todos,filters){
-    const filtered = todos.filter(function(todo){
+    let filtered = todos.filter(function(todo){
        return  todo.text.toLowerCase().includes(filter.search.toLowerCase())
+    })
+
+    filtered = filtered.filter(function(todo){
+        if(filters.hideCompleted){
+            return !todo.completed
+        }else{
+            return true
+        }
     })
 
         
@@ -44,17 +53,32 @@ const renders = function(todos,filters){
 renders(todos,filter)
 
 // Listen for new todo creation
-document.querySelector('#add-todo').addEventListener('click', function (e) {
-    console.log('Add a new todo...')
-})
+
 
 // Listen for todo text change
-document.querySelector('#new-todo-text').addEventListener('input', function (e) {
-    console.log(e.target.value)
-})
 
 search = document.querySelector('.search').addEventListener('input',function(e){
    filter.search = e.target.value
     renders(todos,filter)
     
+
+})
+
+
+document.querySelector("#todo-form").addEventListener('submit',function(e){
+    e.preventDefault()
+    console.log(e.target.elements.input1.value)
+
+    todos.push({
+        text:e.target.elements.input1.value,
+        completed: false
+    })
+    e.target.elements.input1.value = '';
+    renders(todos,filter)
+})
+
+
+document.querySelector("#show-completed").addEventListener('change',function(e){
+    filter.hideCompleted = e.target.checked
+    renders(todos,filter)
 })
