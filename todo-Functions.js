@@ -44,8 +44,17 @@ const renders = function(todos,filters){
 
 
 const generateTodoDOM = function(todo){
-    const p = document.createElement('p')
-        p.textContent = todo.text
+    const p = document.createElement('div')
+    const deleteButton = document.createElement('button')
+    const text = document.createElement('span')
+    const checkbox = document.createElement('input')
+    checkbox.setAttribute('type','checkbox')
+    text.textContent = todo.text
+    deleteButton.textContent = "delete"
+    p.appendChild(checkbox)
+    p.appendChild(text)
+    p.appendChild(deleteButton)
+
         return p;
 }
 
