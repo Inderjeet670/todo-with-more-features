@@ -1,4 +1,5 @@
-let todos = []
+let todos = getSavedTodos()
+
 
 const filter = {
     search: '',
@@ -6,40 +7,7 @@ const filter = {
 
 }
 
-const todosJSON = localStorage.getItem('todos')
 
-if(todosJSON !== null){
-    todos = JSON.parse(todosJSON)
-}
-const renders = function(todos,filters){
-    let filtered = todos.filter(function(todo){
-       return  todo.text.toLowerCase().includes(filter.search.toLowerCase())
-    })
-
-    filtered = filtered.filter(function(todo){
-        if(filters.hideCompleted){
-            return !todo.completed
-        }else{
-            return true
-        }
-    })
-
-        
-    const incompleteTodos = filtered.filter(function (todo) {
-        return !todo.completed
-    })
-
-    document.querySelector('.todo').innerHTML = ''
-    const summary = document.createElement('h2')
-    summary.textContent = `You have ${incompleteTodos.length} todos left`
-    document.querySelector('.todo').appendChild(summary)
-
-    filtered.forEach(function (todo) {
-        const p = document.createElement('p')
-        p.textContent = todo.text
-        document.querySelector('.todo').appendChild(p)
-    })
-}
 renders(todos,filter)
 
 // Listen for new todo creation
@@ -63,7 +31,7 @@ document.querySelector("#todo-form").addEventListener('submit',function(e){
         text:e.target.elements.input1.value,
         completed: false
     })
-    localStorage.setItem('todos',JSON.stringify(todos))
+    saveTodos(todos)
     renders(todos,filter)
     e.target.elements.input1.value = '';
 
