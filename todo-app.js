@@ -1,19 +1,4 @@
-const todos = [{
-    text: 'Order cat food',
-    completed: false
-}, {
-    text: 'Clean kitchen',
-    completed: true
-}, {
-    text: 'Buy food',
-    completed: true
-}, {
-    text: 'Do work',
-    completed: false
-}, {
-    text: 'Exercise',
-    completed: true
-}]
+let todos = []
 
 const filter = {
     search: '',
@@ -21,6 +6,11 @@ const filter = {
 
 }
 
+const todosJSON = localStorage.getItem('todos')
+
+if(todosJSON !== null){
+    todos = JSON.parse(todosJSON)
+}
 const renders = function(todos,filters){
     let filtered = todos.filter(function(todo){
        return  todo.text.toLowerCase().includes(filter.search.toLowerCase())
@@ -73,8 +63,10 @@ document.querySelector("#todo-form").addEventListener('submit',function(e){
         text:e.target.elements.input1.value,
         completed: false
     })
-    e.target.elements.input1.value = '';
+    localStorage.setItem('todos',JSON.stringify(todos))
     renders(todos,filter)
+    e.target.elements.input1.value = '';
+
 })
 
 
