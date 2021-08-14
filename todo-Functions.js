@@ -54,6 +54,11 @@ const generateTodoDOM = function(todo){
     p.appendChild(checkbox)
     p.appendChild(text)
     p.appendChild(deleteButton)
+    deleteButton.addEventListener('click',function(e){
+        removeTodo(todo.id)
+        saveTodos()
+        renders(todos,filter)
+    })
 
         return p;
 }
@@ -63,4 +68,14 @@ const generateSummaryDOM = function(incompleteTodos){
     summary.textContent = `You have ${incompleteTodos.length} todos left`
 
     return summary;
+}
+
+const removeTodo = function(id){
+    const indexTodo = todos.findIndex(function(todo){
+        return todo.id === id
+            
+    })
+    if(indexTodo > -1){
+        todos.splice(indexTodo,1)
+    }
 }
