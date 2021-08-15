@@ -51,16 +51,37 @@ const generateTodoDOM = function(todo){
     checkbox.setAttribute('type','checkbox')
     text.textContent = todo.text
     deleteButton.textContent = "delete"
+    checkbox.checked = todo.completed;
     p.appendChild(checkbox)
     p.appendChild(text)
     p.appendChild(deleteButton)
+
+    checkbox.addEventListener('change', function () {
+        toggleTodo(todo.id)
+        saveTodos(todos)
+        renders(todos, filter)
+    })
+
+    
+
+
     deleteButton.addEventListener('click',function(e){
         removeTodo(todo.id)
-        saveTodos()
+        saveTodos(todos)
         renders(todos,filter)
     })
 
         return p;
+}
+
+const toggleTodo = function(id){
+    const todo = todos.find(function(todo){
+        return todo.id === id;
+    })
+
+    if(todo !== undefined){
+        todo.completed = !todo.completed
+    }
 }
 
 const generateSummaryDOM = function(incompleteTodos){
